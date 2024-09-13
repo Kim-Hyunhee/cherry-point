@@ -1,0 +1,879 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_admin {
+  admin_idx   Int       @id @default(autoincrement())
+  admin_grade String?   @db.Char(1)
+  admin_id    String?   @db.VarChar(100)
+  admin_pw    String?   @db.VarChar(200)
+  admin_name  String?   @db.VarChar(100)
+  admin_tel   String?   @db.VarChar(20)
+  admin_phone String?   @db.VarChar(20)
+  admin_part  String?   @db.VarChar(50)
+  admin_right String?   @db.VarChar(100)
+  admin_state String?   @db.Char(1)
+  del_yn      String?   @default("N") @db.VarChar(1)
+  ins_date    DateTime? @db.DateTime(0)
+  upd_date    DateTime? @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_alarm {
+  alarm_idx     Int       @id @default(autoincrement())
+  member_idx    Int?      @default(0)
+  corp_idx      Int?      @default(0)
+  title         String?   @db.VarChar(100)
+  msg           String?   @db.VarChar(200)
+  data          String?   @db.Text
+  read_yn       String?   @default("N") @db.Char(1)
+  index         String?   @db.VarChar(10)
+  device_os     String?   @db.Char(1)
+  gcm_key       String?   @db.Text
+  alarm_yn      String?   @default("Y") @db.Char(1)
+  send_yn       String?   @default("N") @db.Char(1)
+  multi_send_yn String?   @default("N") @db.Char(1)
+  del_yn        String?   @default("N") @db.Char(1)
+  ins_date      DateTime? @db.DateTime(0)
+  upd_date      DateTime? @db.DateTime(0)
+
+  @@index([member_idx], map: "KEY")
+  @@index([alarm_idx], map: "alarm_key")
+  @@index([del_yn], map: "del_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_attendance {
+  attendance_idx Int       @id @default(autoincrement())
+  member_idx     Int?
+  order_no       Int?
+  point          Int?      @default(0)
+  luckbox_point  Int?      @default(0)
+  del_yn         String?   @default("N") @db.Char(1)
+  ins_date       DateTime? @db.DateTime(0)
+  upd_date       DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([luckbox_point], map: "idx_luckbox_point")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_button {
+  button_idx Int       @id @default(autoincrement())
+  member_idx Int?
+  order_no   Int?
+  point      Int?      @default(0)
+  data       Json?
+  del_yn     String?   @default("N") @db.Char(1)
+  ins_date   DateTime? @db.DateTime(0)
+  upd_date   DateTime? @db.DateTime(0)
+
+  @@index([member_idx], map: "member_key")
+  @@index([order_no], map: "no_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_buzzvil {
+  buzzvil_idx Int       @id @default(autoincrement())
+  member_idx  Int?
+  order_no    Int?
+  point       Int?      @default(0)
+  data        Json?
+  del_yn      String?   @default("N") @db.Char(1)
+  ins_date    DateTime? @db.DateTime(0)
+  upd_date    DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_challenge {
+  challenge_idx  Int       @id @default(autoincrement())
+  member_idx     Int?
+  challenge_type String?   @db.Char(1)
+  order_no       Int?
+  point          Int?      @default(0)
+  data           Json?
+  del_yn         String?   @default("N") @db.Char(1)
+  ins_date       DateTime? @db.DateTime(0)
+  upd_date       DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_cherry_roulette {
+  cherry_roulette_idx Int       @id @default(autoincrement())
+  member_idx          Int?
+  order_no            Int?
+  point               Int?      @default(0)
+  del_yn              String?   @default("N") @db.Char(1)
+  ins_date            DateTime? @db.DateTime(0)
+  upd_date            DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([point], map: "idx_point")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_game {
+  game_idx   Int       @id @default(autoincrement())
+  member_idx Int?
+  order_no   Int?
+  point      Int?      @default(0)
+  data       Json?
+  del_yn     String?   @default("N") @db.Char(1)
+  ins_date   DateTime? @db.DateTime(0)
+  upd_date   DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_yn")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_gmo_game {
+  game_idx   Int       @id @default(autoincrement())
+  member_idx Int?
+  order_no   Int?
+  point      Int?      @default(0)
+  data       Json?
+  del_yn     String?   @default("N") @db.Char(1)
+  ins_date   DateTime? @db.DateTime(0)
+  upd_date   DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_gmo_survey {
+  survey_idx Int       @id @default(autoincrement())
+  member_idx Int?
+  order_no   Int?
+  point      Int?      @default(0)
+  data       Json?
+  del_yn     String?   @default("N") @db.Char(1)
+  ins_date   DateTime? @db.DateTime(0)
+  upd_date   DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_gold_roulette {
+  gold_roulette_idx Int       @id @default(autoincrement())
+  member_idx        Int?
+  order_no          Int?
+  point             Int?      @default(0)
+  del_yn            String?   @default("N") @db.Char(1)
+  ins_date          DateTime? @db.DateTime(0)
+  upd_date          DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([point], map: "idx_point")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_lottery {
+  lottery_idx Int       @id @default(autoincrement())
+  member_idx  Int?
+  order_no    Int?
+  point       Int?      @default(0)
+  del_yn      String?   @default("N") @db.Char(1)
+  ins_date    DateTime? @db.DateTime(0)
+  upd_date    DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([point], map: "idx_point")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_mission {
+  mission_idx  Int       @id @default(autoincrement())
+  member_idx   Int?
+  mission_type Int?
+  order_no     Int?
+  point        Int?      @default(0)
+  data         Json?
+  del_yn       String?   @default("N") @db.Char(1)
+  ins_date     DateTime? @db.DateTime(0)
+  upd_date     DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_pollfish {
+  pollfish_idx Int       @id @default(autoincrement())
+  member_idx   Int?
+  order_no     Int?
+  point        Int?      @default(0)
+  data         Json?
+  del_yn       String?   @default("N") @db.Char(1)
+  ins_date     DateTime? @db.DateTime(0)
+  upd_date     DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_survey {
+  survey_idx Int       @id @default(autoincrement())
+  member_idx Int?
+  order_no   Int?
+  point      Int?      @default(0)
+  data       Json?
+  del_yn     String?   @default("N") @db.Char(1)
+  ins_date   DateTime? @db.DateTime(0)
+  upd_date   DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_walking {
+  walking_idx Int       @id @default(autoincrement())
+  member_idx  Int?
+  order_no    Int?
+  point       Int?      @default(0)
+  data        Json?
+  del_yn      String?   @default("N") @db.Char(1)
+  ins_date    DateTime? @db.DateTime(0)
+  upd_date    DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_city {
+  city_idx              Int       @id @default(autoincrement())
+  city_code             Int?
+  city_name             String?   @db.VarChar(300)
+  order_no              Int?
+  ins_date              DateTime? @db.DateTime(0)
+  tbl_member_member_idx Int?
+
+  @@index([city_code], map: "key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_event {
+  event_idx         Int       @id @default(autoincrement())
+  event_id          String?   @db.VarChar(20)
+  event_type        String?   @db.VarChar(20)
+  kids_event_yn     String?   @default("N") @db.Char(1)
+  title             String?   @db.VarChar(45)
+  contents          String?   @db.Text
+  subtitle          String?   @db.VarChar(1000)
+  event_win_type    String?   @db.VarChar(10)
+  event_win_cnt     Int?
+  start_date        String?   @db.VarChar(10)
+  end_date          String?   @db.VarChar(10)
+  announce_date     String?   @db.VarChar(10)
+  announce_type     String?   @db.Char(1)
+  announce_url_name String?   @db.VarChar(200)
+  announce_url      String?   @db.VarChar(200)
+  img_url           String?   @db.VarChar(200)
+  img_width         Int?
+  img_height        Int?
+  large_img_url     String?   @db.VarChar(200)
+  large_img_width   Int?
+  large_img_height  Int?
+  state             String?   @default("1") @db.Char(1)
+  link_url_android  String?   @db.VarChar(200)
+  link_url_ios      String?   @db.VarChar(200)
+  link_url          String?   @db.VarChar(200)
+  target            String?   @db.Char(1)
+  view_cnt          Int?      @default(0)
+  del_yn            String?   @default("N") @db.Char(1)
+  ins_date          DateTime? @db.DateTime(0)
+  upd_date          DateTime? @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_event_apply {
+  event_apply_idx Int       @id @default(autoincrement())
+  member_idx      Int?
+  event_idx       Int?
+  apply_yn        String?   @default("N") @db.Char(1)
+  del_yn          String?   @default("N") @db.Char(1)
+  ins_date        DateTime? @db.DateTime(0)
+  upd_date        DateTime? @db.DateTime(0)
+
+  @@unique([member_idx, event_idx], map: "uni_key")
+  @@index([del_yn], map: "del_key")
+  @@index([event_idx], map: "event_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_event_copy {
+  event_idx         Int       @id @default(autoincrement())
+  event_id          String?   @db.VarChar(20)
+  event_type        String?   @db.VarChar(20)
+  kids_event_yn     String?   @default("N") @db.Char(1)
+  title             String?   @db.VarChar(45)
+  contents          String?   @db.Text
+  subtitle          String?   @db.VarChar(1000)
+  event_win_type    String?   @db.VarChar(10)
+  event_win_cnt     Int?
+  start_date        String?   @db.VarChar(10)
+  end_date          String?   @db.VarChar(10)
+  announce_date     String?   @db.VarChar(10)
+  announce_type     String?   @db.Char(1)
+  announce_url_name String?   @db.VarChar(200)
+  announce_url      String?   @db.VarChar(200)
+  img_url           String?   @db.VarChar(200)
+  img_width         Int?
+  img_height        Int?
+  large_img_url     String?   @db.VarChar(200)
+  large_img_width   Int?
+  large_img_height  Int?
+  state             String?   @default("1") @db.Char(1)
+  link_url_android  String?   @db.VarChar(200)
+  link_url_ios      String?   @db.VarChar(200)
+  link_url          String?   @db.VarChar(200)
+  target            String?   @db.Char(1)
+  view_cnt          Int?      @default(0)
+  del_yn            String?   @default("N") @db.Char(1)
+  ins_date          DateTime? @db.DateTime(0)
+  upd_date          DateTime? @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_event_view {
+  event_view_idx Int       @id @default(autoincrement())
+  member_idx     Int?
+  event_idx      Int?
+  view_date      String?   @db.VarChar(20)
+  del_yn         String?   @default("N") @db.Char(1)
+  ins_date       DateTime? @db.DateTime(0)
+  upd_date       DateTime? @db.DateTime(0)
+
+  @@unique([member_idx, event_idx, view_date], map: "uni_key")
+  @@index([del_yn], map: "del_key")
+  @@index([event_idx], map: "event_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_faq {
+  faq_idx    Int       @id @default(autoincrement())
+  title      String?   @db.VarChar(100)
+  contents   String?   @db.MediumText
+  display_yn String?   @default("Y") @db.Char(1)
+  del_yn     String?   @default("N") @db.Char(1)
+  ins_date   DateTime? @db.DateTime(0)
+  upd_date   DateTime? @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_member {
+  member_idx          Int                 @id @default(autoincrement())
+  member_join_type    String?             @db.Char(1)
+  unique_key          String?             @db.VarChar(200)
+  member_email        String?             @db.VarChar(200)
+  member_id           String?             @db.VarChar(200)
+  member_pw           String?             @db.VarChar(200)
+  member_name         String?             @db.VarChar(200)
+  member_phone        String?             @db.VarChar(200)
+  member_gender       String?             @db.VarChar(1)
+  member_birth        String?             @db.VarChar(200)
+  city_code           Int?
+  region_code         Int?
+  member_point        Int?                @default(0)
+  lottery_cnt         Int?                @default(2)
+  button_cnt          Int?                @default(40)
+  button_click_date   DateTime?           @db.DateTime(0)
+  member_code         String?             @db.VarChar(20)
+  invite_code         String?             @db.VarChar(20)
+  add_info_yn         String?             @default("N") @db.Char(1)
+  all_alarm_yn        String?             @default("Y") @db.Char(1)
+  gcm_key             String?             @db.VarChar(200)
+  device_os           String?             @db.Char(1)
+  change_pw_key       String?             @db.VarChar(200)
+  member_leave_reason String?             @db.VarChar(200)
+  member_leave_date   DateTime?           @db.DateTime(0)
+  login_date          DateTime?           @db.DateTime(0)
+  first_join_yn       String?             @default("N") @db.Char(1)
+  del_yn              String?             @default("N") @db.VarChar(1)
+  ins_date            DateTime?           @db.DateTime(0)
+  upd_date            DateTime?           @db.DateTime(0)
+  profileImage        String?
+  isSnsActive         Boolean             @default(true)
+  comments            Comment[]
+  commentReports      CommentReport[]
+  KeywordLabLogs      KeywordLabLogs[]
+  memberPostingHits   MemberPostingHit[]
+  memberPostingLikes  MemberPostingLike[]
+  PlusCashLogs        PlusCashLogs[]
+  postings            Posting[]
+  postingReports      PostingReport[]
+  tbl_c_advertise     tbl_c_advertise[]
+
+  @@index([del_yn], map: "del_key")
+  @@index([member_idx], map: "key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_member_point {
+  member_point_idx Int       @id @default(autoincrement())
+  member_idx       Int?
+  point_category   String?   @db.VarChar(10)
+  title            String?   @db.VarChar(100)
+  point_type       String?   @db.Char(1)
+  point            Int?
+  member_point     Int?      @default(0)
+  data             Json?
+  del_yn           String?   @default("N") @db.Char(1)
+  ins_date         DateTime? @db.DateTime(0)
+  upd_date         DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_yn_key")
+  @@index([del_yn, point], map: "idx_del_yn_point")
+  @@index([ins_date], map: "ins_date_key")
+  @@index([member_idx], map: "key")
+  @@index([point], map: "point_key")
+  @@index([point_type], map: "point_type_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_member_point_date {
+  member_point_date_idx Int     @id @default(autoincrement())
+  st_date               String? @db.VarChar(200)
+  start_idx             BigInt?
+  end_idx               BigInt?
+
+  @@index([st_date], map: "st_date_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_member_point_new {
+  member_point_idx Int       @id @default(autoincrement())
+  member_idx       Int?
+  point_category   String?   @db.VarChar(10)
+  title            String?   @db.VarChar(100)
+  point_type       String?   @db.Char(1)
+  point            Int?
+  member_point     Int?      @default(0)
+  data             Json?
+  del_yn           String?   @default("N") @db.VarChar(10)
+  ins_date         DateTime? @db.DateTime(0)
+  upd_date         DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_yn_key")
+  @@index([del_yn, point], map: "idx_del_yn_point")
+  @@index([ins_date], map: "ins_date_key")
+  @@index([member_idx], map: "key")
+  @@index([point], map: "point_key")
+  @@index([point_type], map: "point_type_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_notice {
+  notice_idx   Int       @id @default(autoincrement())
+  title        String?   @db.VarChar(200)
+  contents     String?   @db.MediumText
+  img          String?   @db.VarChar(200)
+  img_width    Int?
+  img_height   Int?
+  notice_state String?   @default("N") @db.Char(1)
+  del_yn       String?   @default("N") @db.Char(1)
+  ins_date     DateTime? @db.DateTime(0)
+  upd_date     DateTime? @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_order {
+  order_idx        Int       @id @default(autoincrement())
+  order_number     String?   @db.VarChar(50)
+  order_date       DateTime? @db.DateTime(0)
+  member_idx       Int?
+  member_join_type String?   @db.Char(1)
+  member_id        String?   @db.VarChar(200)
+  member_name      String?   @db.VarChar(200)
+  member_phone     String?   @db.VarChar(200)
+  member_gender    String?   @db.Char(20)
+  member_birth     String?   @db.VarChar(200)
+  city_code        String?   @db.VarChar(20)
+  region_code      String?   @db.VarChar(20)
+  member_code      String?   @db.VarChar(20)
+  product_idx      Int?
+  order_price      Int?      @default(0)
+  product_type     String?   @db.Char(1)
+  product_name     String?   @db.VarChar(200)
+  brand_name       String?   @db.VarChar(200)
+  product_price    Int?
+  product_img_path String?   @db.VarChar(200)
+  del_yn           String?   @default("N") @db.Char(1)
+  ins_date         DateTime? @db.DateTime(0)
+  upd_date         DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_percentage {
+  percentage_idx  Int       @id @default(autoincrement())
+  cherry_point    Int?
+  percentage      Decimal?  @default(0.00000) @db.Decimal(7, 5)
+  percentage_type String?   @db.Char(1)
+  del_yn          String?   @default("N") @db.Char(1)
+  ins_date        DateTime? @db.DateTime(0)
+  upd_date        DateTime? @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_product {
+  product_idx      Int       @id @default(autoincrement())
+  product_type     String?   @default("0") @db.Char(1)
+  product_name     String?   @db.VarChar(200)
+  brand_name       String?   @db.VarChar(100)
+  product_price    Int?      @default(0)
+  product_img_path String?   @db.VarChar(200)
+  product_state    String?   @default("1") @db.Char(1)
+  del_yn           String?   @default("N") @db.Char(1)
+  ins_date         DateTime? @db.DateTime(0)
+  upd_date         DateTime? @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_qa {
+  qa_idx         Int       @id @default(autoincrement())
+  member_idx     Int?
+  qa_type        Int?
+  qa_title       String?   @db.VarChar(200)
+  qa_contents    String?   @db.MediumText
+  reply_contents String?   @db.MediumText
+  reply_yn       String?   @default("N") @db.VarChar(1)
+  reply_date     DateTime? @db.DateTime(0)
+  del_yn         String?   @default("N") @db.VarChar(1)
+  ins_date       DateTime? @db.DateTime(0)
+  upd_date       DateTime? @db.DateTime(0)
+
+  @@index([del_yn], map: "del_key")
+  @@index([member_idx], map: "member_key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_recommend {
+  recommend_idx  Int     @id @default(autoincrement())
+  recommend_type String? @db.VarChar(20)
+  order_no       Int?
+  event_idx      Int?
+  display_yn     String? @default("Y") @db.Char(1)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_region {
+  region_idx  Int       @id @default(autoincrement())
+  city_code   Int?
+  region_code Int?
+  region_name String?   @db.VarChar(300)
+  order_no    Int?
+  ins_date    DateTime? @db.DateTime(0)
+
+  @@index([region_code], map: "key")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_start_popup {
+  start_popup_idx  Int       @id @default(autoincrement())
+  event_idx        Int?
+  event_id         String?   @db.VarChar(20)
+  title            String?   @db.VarChar(100)
+  img_path         String?   @db.VarChar(200)
+  link_type        String?   @db.Char(1)
+  link_url_andriod String?   @db.VarChar(200)
+  link_url_ios     String?   @db.VarChar(200)
+  state            String?   @db.Char(1)
+  del_yn           String?   @default("N") @db.Char(1)
+  ins_date         DateTime? @db.DateTime(0)
+  upd_date         DateTime? @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_terms_management {
+  terms_management_idx Int       @id @default(autoincrement())
+  title                String?   @db.VarChar(50)
+  member_type          Int?
+  type                 String?   @db.Char(1)
+  contents             String?   @db.LongText
+  upd_date             DateTime? @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_c_greenp {
+  greenp_idx         Int       @id @default(autoincrement())
+  member_idx         Int?
+  ads_idx            Int?
+  ads_name           String?   @db.VarChar(255)
+  rwd_cost           Int?
+  ads_re_participate String?   @db.VarChar(1)
+  ins_date_time      DateTime? @db.DateTime(0)
+  udps_date_time     DateTime? @db.DateTime(0)
+  del_yn             String?   @default("N") @db.Char(1)
+
+  @@index([del_yn], map: "del_yn")
+  @@index([member_idx], map: "member_idx")
+}
+
+model PersonallyAd {
+  id          Int      @id @default(autoincrement())
+  title       String
+  companyName String
+  content     String   @db.Text
+  image       Json
+  aosLink     String?
+  iosLink     String?
+  deepLink    String?
+  isShow      Boolean? @default(false)
+  createdAt   DateTime @default(now()) @db.DateTime(0)
+  updatedAt   DateTime @default(now()) @db.DateTime(0)
+}
+
+model Posting {
+  id                 Int                 @id @default(autoincrement())
+  memberId           Int
+  thumbs             Json
+  title              String
+  content            String              @db.Text
+  isDelete           Boolean             @default(false)
+  isAutoRestrict     Boolean             @default(false)
+  isManualRestrict   Boolean?
+  createdAt          DateTime            @default(now()) @db.DateTime(0)
+  updatedAt          DateTime            @default(now()) @db.DateTime(0)
+  commentScore       Int                 @default(0)
+  hitCount           Int                 @default(0)
+  hitScore           Int                 @default(0)
+  likeScore          Int                 @default(0)
+  totalScore         Int                 @default(0)
+  comments           Comment[]
+  memberPostingHits  MemberPostingHit[]
+  memberPostingLikes MemberPostingLike[]
+  member             tbl_member          @relation(fields: [memberId], references: [member_idx])
+  reports            PostingReport[]
+
+  @@index([memberId], map: "Posting_memberId_fkey")
+}
+
+model Comment {
+  id               Int             @id @default(autoincrement())
+  memberId         Int
+  postingId        Int
+  content          String          @db.Text
+  commentId        Int?
+  isDelete         Boolean         @default(false)
+  isAutoRestrict   Boolean         @default(false)
+  isManualRestrict Boolean?
+  createdAt        DateTime        @default(now()) @db.DateTime(0)
+  updatedAt        DateTime        @default(now()) @db.DateTime(0)
+  comment          Comment?        @relation("replies", fields: [commentId], references: [id])
+  replies          Comment[]       @relation("replies")
+  member           tbl_member      @relation(fields: [memberId], references: [member_idx])
+  posting          Posting         @relation(fields: [postingId], references: [id])
+  reports          CommentReport[]
+
+  @@index([commentId], map: "Comment_commentId_fkey")
+  @@index([memberId], map: "Comment_memberId_fkey")
+  @@index([postingId], map: "Comment_postingId_fkey")
+}
+
+model MemberPostingLike {
+  memberId  Int
+  postingId Int
+  member    tbl_member @relation(fields: [memberId], references: [member_idx])
+  posting   Posting    @relation(fields: [postingId], references: [id])
+
+  @@id([memberId, postingId])
+  @@index([postingId], map: "MemberPostingLike_postingId_fkey")
+}
+
+model PostingReport {
+  memberId  Int
+  postingId Int
+  member    tbl_member @relation(fields: [memberId], references: [member_idx])
+  posting   Posting    @relation(fields: [postingId], references: [id])
+
+  @@id([memberId, postingId])
+  @@index([postingId], map: "PostingReport_postingId_fkey")
+}
+
+model CommentReport {
+  memberId  Int
+  commentId Int
+  comment   Comment    @relation(fields: [commentId], references: [id])
+  member    tbl_member @relation(fields: [memberId], references: [member_idx])
+
+  @@id([memberId, commentId])
+  @@index([commentId], map: "CommentReport_commentId_fkey")
+}
+
+model MemberPostingHit {
+  memberId  Int
+  postingId Int
+  member    tbl_member @relation(fields: [memberId], references: [member_idx])
+  posting   Posting    @relation(fields: [postingId], references: [id])
+
+  @@id([memberId, postingId])
+  @@index([postingId], map: "MemberPostingHit_postingId_fkey")
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  userName  String
+  password  String
+  name      String
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  updatedAt DateTime @default(now()) @db.DateTime(0)
+}
+
+model HotPosting {
+  id             Int      @id @default(autoincrement())
+  postingContent Json
+  savedDate      DateTime @default(now()) @db.DateTime(0)
+  createdAt      DateTime @default(now()) @db.DateTime(0)
+  updatedAt      DateTime @default(now()) @db.DateTime(0)
+}
+
+model Advertiser {
+  id             Int               @id @default(autoincrement())
+  advertiserId   String
+  password       String
+  userName       String
+  point          Int               @default(0)
+  trafficPrice   Int
+  urlPrice       Int
+  createdAt      DateTime          @default(now()) @db.DateTime(0)
+  updatedAt      DateTime          @default(now()) @db.DateTime(0)
+  isDelete       Boolean           @default(false)
+  advertise      Advertise[]
+  AdvertisePoint AdvertiserPoint[]
+}
+
+model Advertise {
+  id               Int               @id @default(autoincrement())
+  advertiserId     Int
+  adType           AdType            @default(Quiz)
+  startDate        DateTime
+  endDate          DateTime
+  isActive         Boolean           @default(true)
+  adCategory       String?
+  adName           String
+  adKeyword        String
+  adAnswer         String?
+  placeUrl         String?
+  dailyRequest     Int
+  isMaxAchievement Boolean           @default(false)
+  isDelete         Boolean           @default(false)
+  createdAt        DateTime          @default(now()) @db.DateTime(0)
+  updatedAt        DateTime          @default(now()) @db.DateTime(0)
+  adQuiz           String?
+  advertiser       Advertiser        @relation(fields: [advertiserId], references: [id])
+  tbl_c_advertise  tbl_c_advertise[]
+
+  @@index([advertiserId], map: "Advertise_advertiserId_fkey")
+}
+
+model KeywordLabLogs {
+  id        Int        @id @default(autoincrement())
+  memberId  Int
+  adType    String
+  point     Int
+  createdAt DateTime   @default(now()) @db.DateTime(0)
+  updatedAt DateTime   @default(now()) @db.DateTime(0)
+  member    tbl_member @relation(fields: [memberId], references: [member_idx])
+
+  @@index([memberId], map: "KeywordLabLogs_memberId_fkey")
+}
+
+model PlusCashLogs {
+  id           Int        @id @default(autoincrement())
+  memberId     Int
+  adType       String
+  point        Int
+  createdAt    DateTime   @default(now()) @db.DateTime(0)
+  updatedAt    DateTime   @default(now()) @db.DateTime(0)
+  campaignId   String
+  campaignName String
+  reward       Int
+  uniqueKey    String
+  member       tbl_member @relation(fields: [memberId], references: [member_idx])
+
+  @@index([memberId], map: "PlusCashLogs_memberId_fkey")
+}
+
+model tbl_c_advertise {
+  id            Int        @id @default(autoincrement())
+  memberId      Int
+  advertiseId   Int
+  createdAt     DateTime   @default(now()) @db.DateTime(0)
+  updatedAt     DateTime   @default(now()) @db.DateTime(0)
+  adType        AdType     @default(Save)
+  advertiserId  Int        @default(0)
+  point         Int        @default(0)
+  advertisement Advertise  @relation(fields: [advertiseId], references: [id])
+  member        tbl_member @relation(fields: [memberId], references: [member_idx])
+
+  @@index([advertiseId], map: "tbl_c_advertise_advertiseId_fkey")
+  @@index([memberId], map: "tbl_c_advertise_memberId_fkey")
+}
+
+model AdvertiserPoint {
+  id           Int        @id @default(autoincrement())
+  point        Int
+  advertiserId Int
+  createdAt    DateTime   @default(now()) @db.DateTime(0)
+  updatedAt    DateTime   @default(now()) @db.DateTime(0)
+  pointType    PointType  @default(Increase)
+  currentPoint Int        @default(0)
+  advertiser   Advertiser @relation(fields: [advertiserId], references: [id])
+
+  @@index([advertiserId], map: "AdvertiserPoint_advertiserId_fkey")
+}
+
+model AdvertiseQuiz {
+  id        Int      @id @default(autoincrement())
+  quiz      String
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  updatedAt DateTime @default(now()) @db.DateTime(0)
+}
+
+model System {
+  id             Int      @id @default(autoincrement())
+  trafficReward  Int
+  placeReward    Int
+  trafficInfoImg String
+  placeInfoImg   String
+  createdAt      DateTime @default(now()) @db.DateTime(0)
+  updatedAt      DateTime @default(now()) @db.DateTime(0)
+  bonusReward    Int
+}
+
+enum AdType {
+  Quiz
+  Save
+}
+
+enum PointType {
+  Increase
+  Decrease
+}
