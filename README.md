@@ -45,25 +45,127 @@
  
 ```bash
 ├─prisma
+│      schema.prisma
+│
 ├─src
+│  │  app.controller.spec.ts
+│  │  app.controller.ts
+│  │  app.module.ts
+│  │  app.service.ts
+│  │  main.ts
+│  │
 │  ├─common
+│  │      calculatePoint.ts
+│  │      constants.ts
+│  │      frequency.ts
+│  │      helper.ts
+│  │      pagination.ts
+│  │      responseDto.ts
+│  │      score.ts
+│  │
 │  ├─decorators
+│  │      currentMember.decorator.ts
+│  │
 │  └─module
 │      ├─admin
+│      │      admin.controller.ts
+│      │      admin.hot-posting.controller.ts
+│      │      admin.member.controller.ts
+│      │      admin.module.ts
+│      │      admin.personally-ad.controller.ts
+│      │      admin.report.contoller.ts
+│      │      admin.repository.ts
+│      │      admin.service.ts
+│      │      dto.ts
+│      │
 │      ├─auth
+│      │      admin.guard.ts
+│      │      auth.controller.ts
+│      │      auth.module.ts
+│      │      auth.service.ts
+│      │      dto.ts
+│      │      jwt-auth.guard.ts
+│      │      jwt.strategy.ts
+│      │
 │      ├─comment
+│      │      comment.controller.ts
+│      │      comment.module.ts
+│      │      comment.repository.ts
+│      │      comment.service.ts
+│      │      dto.ts
+│      │
 │      ├─hot-posting
+│      │      hot-posting.module.ts
+│      │      hot-posting.repository.ts
+│      │      hot-posting.service.ts
+│      │
 │      ├─member
+│      │      dto.ts
+│      │      member.controller.ts
+│      │      member.module.ts
+│      │      member.repository.ts
+│      │      member.service.ts
+│      │
 │      ├─personally-ad
+│      │      dto.ts
+│      │      personally-ad.controller.ts
+│      │      personally-ad.module.ts
+│      │      personally-ad.repository.ts
+│      │      personally-ad.service.ts
+│      │
 │      ├─point
+│      │  │  dto.ts
+│      │  │  point.controller.ts
+│      │  │  point.module.ts
+│      │  │  point.service.ts
+│      │  │
 │      │  └─repositorires
+│      │          GreenpRepository.ts
+│      │          memberPoint.repository.ts
+│      │
 │      ├─posting
+│      │      dto.ts
+│      │      posting.controller.ts
+│      │      posting.module.ts
+│      │      posting.repository.ts
+│      │      posting.service.ts
+│      │
 │      ├─posting-score
+│      │      posting-score.module.ts
+│      │      posting-score.service.ts
+│      │
 │      ├─prisma
+│      │      prisma.module.ts
+│      │      prisma.service.ts
+│      │
 │      ├─report
+│      │      dto.ts
+│      │      report.controller.ts
+│      │      report.module.ts
+│      │      report.repository.ts
+│      │      report.service.ts
+│      │
 │      └─upload
+│              dto.ts
+│              upload.controller.ts
+│              upload.module.ts
+│              upload.service.ts
+│
 └─test
+        app.e2e-spec.ts
+        jest-e2e.json
 ```
+</div>
+</details>
+
+## **ERD**
+
+<details>
+<summary><strong>ERD 이미지 보기</strong></summary>
+<div markdown="1">
+
+![ERD 이미지](https://github.com/user-attachments/assets/83b5da67-fbdd-4bc8-b9af-8f4de322ed1f)
+
 </div>
 </details>
 
